@@ -8,24 +8,12 @@ export function useTotalSupply() {
     address: NFT_CONTRACT_ADDRESS,
     abi: NFT_ABI,
     functionName: 'totalSupply',
+    query: {
+      refetchInterval: 3000, // Sync with blockchain every 3 seconds
+    }
   })
 }
 
-export function useMaxSupply() {
-  return useReadContract({
-    address: NFT_CONTRACT_ADDRESS,
-    abi: NFT_ABI,
-    functionName: 'MAX_SUPPLY',
-  })
-}
-
-export function useMaxPerWallet() {
-  return useReadContract({
-    address: NFT_CONTRACT_ADDRESS,
-    abi: NFT_ABI,
-    functionName: 'MAX_PER_WALLET',
-  })
-}
 
 export function useWalletMintCount(address: `0x${string}` | undefined) {
   return useReadContract({
@@ -33,7 +21,10 @@ export function useWalletMintCount(address: `0x${string}` | undefined) {
     abi: NFT_ABI,
     functionName: 'walletMintCount',
     args: address ? [address] : undefined,
-    query: { enabled: !!address },
+    query: { 
+      enabled: !!address,
+      refetchInterval: 3000,
+     },
   })
 }
 

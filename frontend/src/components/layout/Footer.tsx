@@ -14,7 +14,7 @@ export function Footer() {
               <span className="font-[family-name:var(--font-pixel)] text-xs text-neon font-bold tracking-widest">CRYPTOPUNKS</span>
             </div>
             <p className="text-xs text-pixel-muted/70 font-[family-name:var(--font-mono)]">Pixel Art NFTs on Arc</p>
-            <p className="text-[10px] text-pixel-subtle font-[family-name:var(--font-mono)]">1,000 Limited Edition</p>
+            <p className="text-[10px] text-pixel-subtle font-[family-name:var(--font-mono)]">10,000 Limited Edition</p>
           </div>
 
           {/* Links */}

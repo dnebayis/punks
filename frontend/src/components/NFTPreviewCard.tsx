@@ -7,19 +7,17 @@ import { PixelText } from './ui/PixelText'
 interface NFTPreviewCardProps {
   tokenId?: number
   imageUrl?: string
-  style?: string
-  palette?: string
-  mood?: string
+  traits?: Record<string, string>
   txHash?: string
   className?: string
 }
 
+const TRAIT_ORDER = ['Background', 'Skin', 'Hair', 'Eyes', 'Mouth', 'Facial Hair', 'Accessory', 'Shirt']
+
 export function NFTPreviewCard({
   tokenId = 0,
   imageUrl,
-  style = 'Pixel Art',
-  palette = 'Neon Sunset',
-  mood,
+  traits,
   txHash,
   className = '',
 }: NFTPreviewCardProps) {
@@ -44,8 +42,11 @@ export function NFTPreviewCard({
   }
 
   const handleShareX = () => {
+    const traitSummary = traits
+      ? Object.entries(traits).slice(0, 3).map(([, v]) => v).join(', ')
+      : ''
     const text = encodeURIComponent(
-      `Just minted CryptoPunk #${tokenId} on @arc Network Testnet\n\nEvery piece is unique.`
+      `Just minted CryptoPunk #${tokenId} on Arc Network Testnet!\n${traitSummary ? `Traits: ${traitSummary}` : ''}\n\nEvery piece is unique.`
     )
     window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank', 'noopener,noreferrer')
   }
@@ -53,6 +54,10 @@ export function NFTPreviewCard({
   const shortHash = txHash
     ? `${txHash.slice(0, 6)}...${txHash.slice(-4)}`
     : 'pending...'
+
+  const visibleTraits = TRAIT_ORDER
+    .filter((k) => traits?.[k] && traits[k] !== 'None')
+    .map((k) => ({ key: k, value: traits![k] }))
 
   return (
     <NeonFrame color="neon" intensity="medium" className={`overflow-hidden ${className}`}>
@@ -77,7 +82,7 @@ export function NFTPreviewCard({
                 src={imageUrl}
                 alt={`CryptoPunk #${tokenId}`}
                 className="w-full h-full object-cover"
-                style={{ imageRendering: 'auto' }}
+                style={{ imageRendering: 'pixelated' }}
                 onLoad={() => setImageLoaded(true)}
               />
             </>
@@ -112,22 +117,16 @@ export function NFTPreviewCard({
             CryptoPunk #{tokenId || '?'}
           </PixelText>
 
-          <div className="grid grid-cols-2 gap-2 mb-4">
-            <div className="px-2 py-1.5 bg-pixel-dark rounded-[2px] border border-pixel-border/30">
-              <p className="text-[8px] text-pixel-muted font-[family-name:var(--font-mono)]">Style</p>
-              <p className="text-xs text-pixel-text">{style}</p>
+          {visibleTraits.length > 0 && (
+            <div className="grid grid-cols-2 gap-1.5 mb-4">
+              {visibleTraits.map(({ key, value }) => (
+                <div key={key} className="px-2 py-1.5 bg-pixel-dark rounded-[2px] border border-pixel-border/30">
+                  <p className="text-[8px] text-pixel-muted font-[family-name:var(--font-mono)] uppercase">{key}</p>
+                  <p className="text-xs text-pixel-text truncate">{value}</p>
+                </div>
+              ))}
             </div>
-            <div className="px-2 py-1.5 bg-pixel-dark rounded-[2px] border border-pixel-border/30">
-              <p className="text-[8px] text-pixel-muted font-[family-name:var(--font-mono)]">Palette</p>
-              <p className="text-xs text-pixel-text">{palette}</p>
-            </div>
-            {mood && (
-              <div className="col-span-2 px-2 py-1.5 bg-pixel-dark rounded-[2px] border border-pixel-border/30">
-                <p className="text-[8px] text-pixel-muted font-[family-name:var(--font-mono)]">Mood</p>
-                <p className="text-xs text-pixel-text">{mood}</p>
-              </div>
-            )}
-          </div>
+          )}
 
           <div className="flex gap-2 mb-3">
             <button
@@ -142,7 +141,7 @@ export function NFTPreviewCard({
               ) : (
                 <>
                   <span>[C]</span>
-                  <span>Copy Preview</span>
+                  <span>Copy Image</span>
                 </>
               )}
             </button>
@@ -151,7 +150,7 @@ export function NFTPreviewCard({
               className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-pixel-dark border border-pixel-border/40 rounded-[4px] text-xs text-pixel-text hover:border-primary/40 hover:text-primary transition-all duration-200 cursor-pointer"
             >
               <span>[X]</span>
-                  <span>Share on X</span>
+              <span>Share on X</span>
             </button>
           </div>
 

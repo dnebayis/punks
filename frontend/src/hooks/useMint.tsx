@@ -11,9 +11,7 @@ interface MintResult {
   metadataURI: string
   txHash: string
   tokenId?: number
-  style?: string
-  palette?: string
-  mood?: string
+  traits?: Record<string, string>
 }
 
 interface MintContextValue {
@@ -81,13 +79,13 @@ export function MintProvider({ children }: { children: React.ReactNode }) {
 
       mint(data.metadataURI)
 
+      const attrs: Array<{ trait_type: string; value: string }> = data.metadata?.attributes ?? []
+      const traits = Object.fromEntries(attrs.map((a) => [a.trait_type, a.value]))
       setResult({
         imageUrl: data.imageUrl,
         metadataURI: data.metadataURI,
         txHash: '',
-        style: data.metadata?.attributes?.find((a: { trait_type: string }) => a.trait_type === 'Style')?.value,
-        palette: data.metadata?.attributes?.find((a: { trait_type: string }) => a.trait_type === 'Palette')?.value,
-        mood: data.metadata?.attributes?.find((a: { trait_type: string }) => a.trait_type === 'Mood')?.value,
+        traits,
       })
     } catch (err) {
       setState('error')

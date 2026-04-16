@@ -18,7 +18,7 @@ contract DeployCryptoPunks is Script {
         console.log("CryptoPunks deployed at:", address(nft));
         console.log("Admin:", deployer);
         console.log("Minter:", deployer);
-        console.log("Max Supply: 1000");
+        console.log("Max Supply: 10000");
         console.log("Symbol: PUNK");
     }
 }

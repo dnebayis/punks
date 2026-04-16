@@ -3,7 +3,6 @@ import cors from "cors";
 import rateLimit from "express-rate-limit";
 import dotenv from "dotenv";
 import generateRouter from "./routes/generate";
-import metadataRouter from "./routes/metadata";
 
 dotenv.config();
 
@@ -27,7 +26,6 @@ const limiter = rateLimit({
 app.use(limiter);
 
 app.use("/api/generate", generateRouter);
-app.use("/api/metadata", metadataRouter);
 
 app.get("/api/health", (_req, res) => {
   res.json({

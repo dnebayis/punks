@@ -149,5 +149,3 @@ export function generatePrompt(
     traits,
   };
 }
-
-export { BACKGROUNDS, SKIN_TONES, HAIR_STYLES, EYES, MOUTH, ACCESSORIES, FACIAL_HAIR };

@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-import "./interfaces/IArcAIArtNFT.sol";
+import "./interfaces/ICryptoPunks.sol";
 
 contract CryptoPunks is
     ERC721,
@@ -15,9 +15,9 @@ contract CryptoPunks is
     ERC721Enumerable,
     AccessControl,
     ReentrancyGuard,
-    IArcAIArtNFT
+    ICryptoPunks
 {
-    uint256 public constant MAX_SUPPLY = 1000;
+    uint256 public constant MAX_SUPPLY = 10000;
     uint256 public constant MAX_PER_WALLET = 5;
 
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
@@ -72,7 +72,7 @@ contract CryptoPunks is
     function totalSupply()
         public
         view
-        override(ERC721Enumerable, IArcAIArtNFT)
+        override(ERC721Enumerable, ICryptoPunks)
         returns (uint256)
     {
         return ERC721Enumerable.totalSupply();

@@ -1,112 +1,109 @@
-# CryptoPunks NFT - Project Architecture & Overview
+# CryptoPunks — Architecture
 
 ## Overview
 
-An AI-powered CryptoPunk-style pixel avatar NFT collection running on Arc Network Testnet. Each mint generates a unique 24x24 pixel avatar with procedurally generated traits (Hair, Eyes, Accessories, Facial Hair, etc.). Every pixel is pseudo-random but deterministic based on wallet address and timestamp, ensuring true uniqueness while maintaining consistency. Max supply: 1,000 NFTs.
+On-chain pixel art NFT collection on Arc Network Testnet. Each mint procedurally generates a unique 24×24 pixel avatar. Traits are determined by a seed derived from wallet address, token ID, and timestamp.
 
 ---
 
-## Technical Specifications
+## Network
 
-| Specification | Value |
+| Property | Value |
 |---|---|
-| **Network** | Arc Testnet (Chain ID: 5042002) |
-| **RPC** | `https://rpc.testnet.arc.network` |
-| **Native Gas Token** | USDC |
-| **Block Explorer** | `https://testnet.arcscan.app` |
-| **Faucet** | `https://faucet.circle.com` |
-| **Token Standard** | ERC-721 |
-| **Max Supply** | 1,000 |
-| **Wallet Limit** | 5 NFTs per wallet |
-| **Pixel Avatar Resolution** | 24x24 px |
+| Network | Arc Testnet |
+| Chain ID | 5042002 |
+| RPC | `https://rpc.testnet.arc.network` |
+| Native Gas Token | USDC |
+| Explorer | `https://testnet.arcscan.app` |
+| Faucet | `https://faucet.circle.com` |
 
 ---
 
-## User Flow
+## Contract
 
-```
-Homepage → Connect Wallet (RainbowKit)
-    → Switch to Arc Testnet
-    → Click "Mint" Button
-    → Generate Pixel Avatar (Loading)
-    → Create Metadata + On-Chain Mint
-    → Mint Successful → Display NFT Preview
-    → "Copy Preview" → "Share on X (Twitter)"
-```
-
----
-
-## Trait System
-
-Available traits per avatar (1,000,000+ unique combinations):
-- **Background**: 10 variations (Blue Gray, Purple Gray, Sage, etc.)
-- **Skin Tone**: 8 variations (Light, Medium, Tan, Brown, Dark, Olive, Alien, Zombie)
-- **Hair**: 13 variations (Afro, Beanie, Blonde, Mohawk, Top Hat, Wild, etc.)
-- **Eyes**: 11 variations (Big Eyes, Sunglasses, VR Headset, Nerd Glasses, 3D Glasses, etc.)
-- **Mouth**: 8 variations (Neutral, Smile, Frown, Red Lipstick, Pipe, Cigarette, etc.)
-- **Facial Hair**: 7 variations (None, Shadow, Mustache, Beard, Goatee, Chin Strap, etc.)
-- **Accessories**: 9 variations (Earrings, Eye Patch, Crown, Chain Necklace, Nose Ring, etc.)
-- **Shirt**: 8 variations (Gray Hoodie, Navy, Red, Black Tee, etc.)
-
----
-
-## Deployment Information
-
-### Contract Addresses (Arc Testnet)
-
-| Contract | Address |
+| Property | Value |
 |---|---|
-| **CryptoPunks NFT** | `0x86e43c45c715285a5d5ed76a97aba95865e11c00` |
-| **Deployment Block** | 38241512 |
-| **Transaction Hash** | `0xc20c5007730e01d5f75023e4f4aaa4a58a784d8fcbfbb5f5420a4dd5ff704e2b` |
-| **Network** | Arc Testnet (Chain ID: 5042002) |
-| **Explorer** | https://testnet.arcscan.app/address/0x86e43c45c715285a5d5ed76a97aba95865e11c00 |
+| Address | `0xf55BE17C98890C4FF4f4904F35D577bB38530b13` |
+| Standard | ERC-721 (OpenZeppelin) |
+| Max Supply | 10,000 |
+| Wallet Limit | 5 |
+| Symbol | PUNK |
+| Explorer | https://testnet.arcscan.app/address/0xf55BE17C98890C4FF4f4904F35D577bB38530b13 |
 
-### Environment Variables
+---
 
-**Backend (`.env`)**
+## Mint Flow
+
 ```
-NFT_CONTRACT_ADDRESS=0x86e43c45c715285a5d5ed76a97aba95865e11c00
+User → Connect Wallet
+     → Click Mint
+     → POST /api/generate { walletAddress, timestamp }
+          → generateTraits(walletAddress, tokenId)  ← seeded selection
+          → generatePunk()                           ← 24×24 canvas render → PNG
+          → uploadImage() → Pinata IPFS
+          → createMetadata() → Pinata IPFS
+     → publicMint(metadataURI) on-chain
+     → NFT minted, traits displayed
+```
+
+---
+
+## Pixel Generation
+
+**Canvas:** 24×24 rendered at 40× scale → 960×960 PNG
+
+**Layer order (bottom to top):**
+1. Background (solid fill)
+2. Base Head (skin, nose, chin, shirt)
+3. Hair
+4. Eyes
+5. Mouth
+6. Facial Hair
+7. Accessory
+
+**Seed formula:**
+```
+seed = (tokenId × 31 + walletAddress.charCodeAt(0) × 17 + timestamp % 10000) | 0
+```
+
+---
+
+## Trait Categories
+
+| Category | Count | Examples |
+|---|---|---|
+| Background | 10 | Blue Gray, Sage, Warm Tan |
+| Skin | 8 | Light, Olive, Alien, Zombie |
+| Hair | 18 | Wild Hair, Mohawk, Top Hat, Pink Bob |
+| Eyes | 11 | Big Eyes, Sunglasses, VR Headset, Crazy Eyes |
+| Mouth | 8 | Smile, Cigarette, Pipe, Purple Lipstick |
+| Facial Hair | 7 | Mustache, Handlebars, Big Beard, Goatee |
+| Accessory | 9 | Gold Earring, Eye Patch, Crown, Nose Ring |
+| Shirt | 8 | Gray Hoodie, Navy Hoodie, Black Tee |
+
+---
+
+## Environment Variables
+
+**Backend (`backend/.env`)**
+```
+NFT_CONTRACT_ADDRESS=
+PINATA_API_KEY=
+PINATA_API_SECRET=
+PINATA_GATEWAY=
 ARC_TESTNET_RPC_URL=https://rpc.testnet.arc.network
-MINTER_PRIVATE_KEY=...
+PORT=3001
 ```
 
-**Frontend (`.env.local`)**
+**Frontend (`frontend/.env.local`)**
 ```
-NEXT_PUBLIC_NFT_CONTRACT_ADDRESS=0x86e43c45c715285a5d5ed76a97aba95865e11c00
+NEXT_PUBLIC_NFT_CONTRACT_ADDRESS=
 NEXT_PUBLIC_BACKEND_URL=http://localhost:3001
 NEXT_PUBLIC_ARCSCAN_URL=https://testnet.arcscan.app
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=
 ```
 
-### How to Run
-
-**Start Backend**
-```bash
-cd backend
-npm install
-npm run dev  # Runs on http://localhost:3001
+**Contracts (`contracts/.env`)**
 ```
-
-**Start Frontend**
-```bash
-cd frontend
-npm run dev  # Runs on http://localhost:3000
+PRIVATE_KEY=
 ```
-
-Then:
-1. Visit http://localhost:3000
-2. Connect testnet wallet
-3. Click "Mint" to generate a CryptoPunk
-4. Confirm transaction
-5. NFT will be minted on Arc Testnet
-
-### Verify Contract
-
-Visit: https://testnet.arcscan.app/address/0x86e43c45c715285a5d5ed76a97aba95865e11c00
-
-You can view:
-- Contract source code
-- Transactions
-- Token holdings
-- Trait metadata
-

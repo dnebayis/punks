@@ -30,10 +30,10 @@ const pressStart2P = Press_Start_2P({
 
 export const metadata: Metadata = {
   title: 'CryptoPunks - Pixel Avatar NFTs on Arc Network',
-  description: 'Mint unique procedurally-generated 24x24 pixel avatar NFTs on Arc Network Testnet. 1,000 limited edition CryptoPunks with distinct traits. Every avatar is unique.',
+  description: 'Mint unique procedurally-generated 24x24 pixel avatar NFTs on Arc Network Testnet. 10,000 limited edition CryptoPunks with distinct traits. Every avatar is unique.',
   openGraph: {
     title: 'CryptoPunks - Pixel Avatar NFTs',
-    description: 'Unique pixel art avatars on Arc Network. Limited to 1,000 NFTs.',
+    description: 'Unique pixel art avatars on Arc Network. Limited to 10,000 NFTs.',
     type: 'website',
   },
 }

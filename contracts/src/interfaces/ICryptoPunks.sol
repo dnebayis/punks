@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.30;
 
-interface IArcAIArtNFT {
+interface ICryptoPunks {
     event Minted(address indexed to, uint256 indexed tokenId, string tokenURI);
 
     function publicMint(string calldata _tokenURI) external;

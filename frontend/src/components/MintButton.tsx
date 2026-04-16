@@ -28,7 +28,7 @@ export function MintButton() {
   const { state, startMint, resetMint, errorMessage } = useMint()
 
   const totalSupply = Number(totalSupplyData ?? 0n)
-  const maxSupply = 1000
+  const maxSupply = 10000
   const minted = Number(walletMintCount ?? 0n)
   const isSoldOut = totalSupply >= maxSupply
   const isWalletFull = minted >= 5
@@ -98,7 +98,7 @@ export function MintButton() {
 
             {isSoldOut && (
               <p className="text-warning mt-4 text-xs px-2 py-2 bg-warning/10 border border-warning/30 rounded-[2px] w-full">
-                All 1,000 CryptoPunks have been minted!
+                All 10,000 CryptoPunks have been minted!
               </p>
             )}
 

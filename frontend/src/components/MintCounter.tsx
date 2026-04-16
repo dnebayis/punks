@@ -7,7 +7,7 @@ export function MintCounter() {
   const { data: totalSupplyData } = useTotalSupply()
 
   const totalSupply = Number(totalSupplyData ?? 0n)
-  const maxSupply = 1000
+  const maxSupply = 10000
   const remaining = maxSupply - totalSupply
 
   return (

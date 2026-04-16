@@ -50,7 +50,7 @@ function AppContent() {
                 </p>
 
                 <p className="text-base sm:text-lg text-pixel-muted max-w-lg lg:max-w-none leading-relaxed">
-                  1,000 unique CryptoPunks. Procedurally-generated pixel avatars with distinct traits—hair, eyes, accessories, skin tone. Own a piece of pixel art history.
+                  10,000 unique CryptoPunks. Procedurally-generated pixel avatars with distinct traits—hair, eyes, accessories, skin tone. Own a piece of pixel art history.
                 </p>
               </div>
 
@@ -71,9 +71,7 @@ function AppContent() {
                     <NFTPreviewCard
                       tokenId={result.tokenId}
                       imageUrl={result.imageUrl}
-                      style={result.style}
-                      palette={result.palette}
-                      mood={result.mood}
+                      traits={result.traits}
                       txHash={result.txHash}
                       className="h-full shadow-2xl shadow-neon/10"
                     />
