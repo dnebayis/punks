@@ -33,13 +33,13 @@ app.get("/api/health", (_req, res) => {
   res.json({
     status: "ok",
     timestamp: new Date().toISOString(),
-    service: "BitSoul Backend",
+    service: "CryptoPunks Backend",
     version: "1.0.0",
   });
 });
 
 app.listen(PORT, () => {
-  console.log(`BitSoul Backend running on port ${PORT}`);
+  console.log(`CryptoPunks Backend running on port ${PORT}`);
 });
 
 export default app;

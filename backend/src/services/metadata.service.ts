@@ -39,8 +39,8 @@ export async function createMetadata(
   attributes.push({ trait_type: "Generated At", value: new Date().toISOString() });
 
   const metadata = {
-    name: `BitSoul #${input.tokenId}`,
-    description: `BitSoul #${input.tokenId}. A unique CryptoPunk-style pixel avatar on Arc Network. Style: ${input.style}, Palette: ${input.palette}, Mood: ${input.mood}.`,
+    name: `CryptoPunks #${input.tokenId}`,
+    description: `CryptoPunks #${input.tokenId}. A unique CryptoPunk-style pixel avatar on Arc Network. Style: ${input.style}, Palette: ${input.palette}, Mood: ${input.mood}.`,
     image: input.imageUrl,
     attributes,
   };

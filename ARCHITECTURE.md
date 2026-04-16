@@ -1,4 +1,4 @@
-# BitSoul NFT - Project Architecture & Overview
+# CryptoPunks NFT - Project Architecture & Overview
 
 ## Overview
 
@@ -56,24 +56,24 @@ Available traits per avatar (1,000,000+ unique combinations):
 
 | Contract | Address |
 |---|---|
-| **CryptoPunks NFT** | `0x8262EDF802DEE831c01B57991882d61EA3a00E50` |
-| **Deployment Block** | 37414892 |
+| **CryptoPunks NFT** | `0x86e43c45c715285a5d5ed76a97aba95865e11c00` |
+| **Deployment Block** | 38241512 |
 | **Transaction Hash** | `0xc20c5007730e01d5f75023e4f4aaa4a58a784d8fcbfbb5f5420a4dd5ff704e2b` |
 | **Network** | Arc Testnet (Chain ID: 5042002) |
-| **Explorer** | https://testnet.arcscan.app/address/0x8262EDF802DEE831c01B57991882d61EA3a00E50 |
+| **Explorer** | https://testnet.arcscan.app/address/0x86e43c45c715285a5d5ed76a97aba95865e11c00 |
 
 ### Environment Variables
 
 **Backend (`.env`)**
 ```
-NFT_CONTRACT_ADDRESS=0x8262EDF802DEE831c01B57991882d61EA3a00E50
+NFT_CONTRACT_ADDRESS=0x86e43c45c715285a5d5ed76a97aba95865e11c00
 ARC_TESTNET_RPC_URL=https://rpc.testnet.arc.network
 MINTER_PRIVATE_KEY=...
 ```
 
 **Frontend (`.env.local`)**
 ```
-NEXT_PUBLIC_NFT_CONTRACT_ADDRESS=0x8262EDF802DEE831c01B57991882d61EA3a00E50
+NEXT_PUBLIC_NFT_CONTRACT_ADDRESS=0x86e43c45c715285a5d5ed76a97aba95865e11c00
 NEXT_PUBLIC_BACKEND_URL=http://localhost:3001
 NEXT_PUBLIC_ARCSCAN_URL=https://testnet.arcscan.app
 ```
@@ -102,7 +102,7 @@ Then:
 
 ### Verify Contract
 
-Visit: https://testnet.arcscan.app/address/0x8262EDF802DEE831c01B57991882d61EA3a00E50
+Visit: https://testnet.arcscan.app/address/0x86e43c45c715285a5d5ed76a97aba95865e11c00
 
 You can view:
 - Contract source code

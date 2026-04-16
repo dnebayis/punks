@@ -13,7 +13,7 @@ router.post("/", async (req: Request, res: Response) => {
     }
 
     const metadata = {
-      name: `BitSoul #${tokenId}`,
+      name: `CryptoPunks #${tokenId}`,
       description: `A unique procedurally-generated pixel punk. Style: ${style || "unknown"}, Palette: ${palette || "unknown"}, Mood: ${mood || "unknown"}.`,
       image: imageUrl,
       attributes: [
