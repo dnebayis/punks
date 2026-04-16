@@ -1,0 +1,15 @@
+node_modules/
+.env
+.env.local
+.env.development
+.env.production
+dist/
+build/
+.next/
+out/
+contracts/out/
+contracts/cache/
+backend/cache/
+backend/artifacts/
+*.log
+.DS_Store
