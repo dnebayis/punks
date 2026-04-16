@@ -49,7 +49,7 @@ export function ShareButtons() {
     if (!result) return
 
     const text = encodeURIComponent(
-      `Just minted CryptoPunk #${result.tokenId ?? ''} on @arc Network Testnet\n\nEvery piece is unique.`
+      `Just minted CryptoPunk #${result.tokenId ?? ''} on @arc Network Testnet\n\nEvery piece is unique. Mint yours here: https://onchain-punks.vercel.app/`
     )
 
     window.open(

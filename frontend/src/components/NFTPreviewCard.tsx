@@ -46,7 +46,7 @@ export function NFTPreviewCard({
       ? Object.entries(traits).slice(0, 3).map(([, v]) => v).join(', ')
       : ''
     const text = encodeURIComponent(
-      `Just minted CryptoPunk #${tokenId} on Arc Network Testnet!\n${traitSummary ? `Traits: ${traitSummary}` : ''}\n\nEvery piece is unique.`
+      `Just minted CryptoPunk #${tokenId} on Arc Network Testnet!\n${traitSummary ? `Traits: ${traitSummary}` : ''}\n\nEvery piece is unique. Mint yours here: https://onchain-punks.vercel.app/`
     )
     window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank', 'noopener,noreferrer')
   }
