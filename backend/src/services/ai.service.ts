@@ -12,12 +12,13 @@ interface ImageResult {
 
 export async function generateImage(
   walletAddress: string,
-  tokenId: number
+  tokenId: number,
+  timestamp?: number
 ): Promise<ImageResult> {
   const { prompt, style, palette, mood, traits } = generatePrompt(walletAddress, tokenId);
 
   try {
-    const punk = await generatePunk(walletAddress, tokenId);
+    const punk = await generatePunk(walletAddress, tokenId, timestamp);
     return {
       imageBase64: punk.imageBase64,
       prompt,

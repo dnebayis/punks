@@ -7,7 +7,7 @@ const router = Router();
 
 router.post("/", async (req: Request, res: Response) => {
   try {
-    const { walletAddress, tokenId } = req.body;
+    const { walletAddress, tokenId, timestamp } = req.body;
 
     if (!walletAddress) {
       res.status(400).json({ error: "walletAddress is required" });
@@ -15,8 +15,9 @@ router.post("/", async (req: Request, res: Response) => {
     }
 
     const id = tokenId || Date.now();
+    const ts: number = typeof timestamp === "number" ? timestamp : Date.now();
 
-    const result = await generateImage(walletAddress, id);
+    const result = await generateImage(walletAddress, id, ts);
 
     const imageBuffer = Buffer.from(result.imageBase64, "base64");
     const imageCID = await uploadImage(imageBuffer, `arc-ai-art-${id}.png`);

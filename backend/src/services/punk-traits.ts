@@ -298,6 +298,7 @@ function makeHair(i: number): { px: Pixel[]; n: string } {
       px: [
         ...f(8,3,8,3,"#27ae60"),
         ...f(7,6,1,2,"#27ae60"),
+        ...f(8,6,8,1,"#27ae60"),
         ...f(16,6,1,2,"#27ae60"),
       ],
       n: "Green Afro",
@@ -388,16 +389,14 @@ function makeMouth(i: number): { px: Pixel[]; n: string } {
         p(11,16,O), p(12,16,O), p(13,16,O),
         p(14,15,"#795548"),
         p(15,14,"#795548"),
-        p(16,13,"#795548"),
       ],
       n: "Pipe",
     },
     7: {
       px: [
         p(11,16,O), p(12,16,O), p(13,16,O),
-        p(15,16,"#e8d6c4"),
-        p(16,16,"#e8d6c4"),
-        p(17,15,"#e8d6c4"),
+        p(14,16,"#e8d6c4"), p(15,16,"#e8d6c4"),
+        p(15,15,"#e74c3c"),
       ],
       n: "Cigarette",
     },
@@ -508,19 +507,15 @@ function makeAccessory(i: number): { px: Pixel[]; n: string } {
     },
     6: {
       px: [
-        p(11,11,O), p(12,11,O), p(13,11,O),
-        p(11,12,O), p(12,12,"#c0c0c0"), p(13,12,O),
-        p(11,13,O), p(12,13,O), p(13,13,O),
+        p(12,12,"#e8e8e8"), p(12,13,"#c0c0c0"),
       ],
       n: "Nose Ring",
     },
     7: {
       px: [
-        ...f(6,19,12,1,O),
-        p(7,19,"#c9c9c9"), p(8,19,"#c9c9c9"), p(9,19,"#c9c9c9"),
-        p(10,19,"#c9c9c9"), p(11,19,"#c9c9c9"), p(12,19,"#c9c9c9"),
-        p(13,19,"#c9c9c9"), p(14,19,"#c9c9c9"), p(15,19,"#c9c9c9"),
-        p(16,19,"#c9c9c9"), p(17,19,"#c9c9c9"),
+        p(9,19,"#c9c9c9"), p(10,19,"#c9c9c9"), p(11,19,"#c9c9c9"),
+        p(12,19,"#c9c9c9"), p(13,19,"#c9c9c9"), p(14,19,"#c9c9c9"),
+        p(10,20,"#c9c9c9"), p(11,20,"#f0d060"), p(12,20,"#c9c9c9"),
       ],
       n: "Chain Necklace",
     },
@@ -542,13 +537,15 @@ function si(seed: number, len: number): number {
 
 export function generateTraits(
   walletAddress: string,
-  tokenId: number
+  tokenId: number,
+  timestamp?: number
 ): {
   traits: Record<string, string>;
   layers: Layer[];
 } {
+  const ts = timestamp ?? Date.now();
   const seed =
-    (tokenId * 31 + walletAddress.charCodeAt(0) * 17 + (Date.now() % 10000)) | 0;
+    (tokenId * 31 + walletAddress.charCodeAt(0) * 17 + (ts % 10000)) | 0;
 
   const bgIdx = si(seed, BG.length);
   const skinIdx = si(seed + 3, Object.keys(SKIN).length);

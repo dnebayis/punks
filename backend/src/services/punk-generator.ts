@@ -3,12 +3,13 @@ import { generateTraits } from "./punk-traits";
 
 export async function generatePunk(
   walletAddress: string,
-  tokenId: number
+  tokenId: number,
+  timestamp?: number
 ): Promise<{
   imageBase64: string;
   traits: Record<string, string>;
 }> {
-  const { traits, layers } = generateTraits(walletAddress, tokenId);
+  const { traits, layers } = generateTraits(walletAddress, tokenId, timestamp);
 
   const size = 24;
   const scale = 40;
